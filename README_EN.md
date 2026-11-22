@@ -19,7 +19,7 @@ A complete, reproducible face-recognition system: detection → five-point align
 
 ## Highlights
 
-| | |
+| Aspect | Result |
 |---|---|
 | **Accuracy** | Rank-1 **84.13%** on a 50-identity LFW closed set; pairwise verification **99.02%**; EER **6.93%** |
 | **Efficiency** | 11.46 M params / 1.31 GFLOPs (−28% vs. ResNet-18 baseline), 128-d embeddings |
