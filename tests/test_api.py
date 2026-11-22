@@ -1,6 +1,8 @@
 """后端 API 冒烟测试：随机权重也能验证路由、校验与配置读写。"""
 from __future__ import annotations
 
+import io
+
 import numpy as np
 
 
@@ -49,7 +51,7 @@ def test_recognize_requires_image(client):
 def test_recognize_rejects_undecodable_payload(client):
     response = client.post(
         "/api/recognize",
-        data={"image": (b"not-an-image", "bad.jpg")},
+        data={"image": (io.BytesIO(b"not-an-image"), "bad.jpg")},
         content_type="multipart/form-data",
     )
     assert response.status_code == 400
@@ -59,7 +61,7 @@ def test_recognize_rejects_undecodable_payload(client):
 def test_recognize_without_face_returns_friendly_message(client):
     response = client.post(
         "/api/recognize",
-        data={"image": (_blank_jpeg(), "blank.jpg"), "scene": "考勤"},
+        data={"image": (io.BytesIO(_blank_jpeg()), "blank.jpg"), "scene": "考勤"},
         content_type="multipart/form-data",
     )
     assert response.status_code == 200
