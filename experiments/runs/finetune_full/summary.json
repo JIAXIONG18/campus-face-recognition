@@ -1,0 +1,13 @@
+{
+ "tag": "finetune_full",
+ "stage": "finetune",
+ "variant": "full",
+ "params": 11464987,
+ "num_classes": 50,
+ "train_images": 1316,
+ "best_val_acc": 0.6878612716763006,
+ "epochs": 60,
+ "batch": 32,
+ "lr": 0.005,
+ "seconds": 357.2355360984802
+}

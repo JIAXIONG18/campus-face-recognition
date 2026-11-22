@@ -1,0 +1,13 @@
+{
+ "tag": "abl_ds_se",
+ "stage": "finetune",
+ "variant": "ds_se",
+ "params": 11662747,
+ "num_classes": 50,
+ "train_images": 1316,
+ "best_val_acc": 0.630057803468208,
+ "epochs": 30,
+ "batch": 32,
+ "lr": 0.005,
+ "seconds": 183.98775172233582
+}

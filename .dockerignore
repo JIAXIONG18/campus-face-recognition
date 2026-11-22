@@ -1,0 +1,16 @@
+.git
+.github
+data
+defense
+docs/source
+experiments/runs/abl_*
+experiments/runs/pretrain_full
+experiments/runs/finetune_celeba
+experiments/runs/finetune_choke
+__pycache__
+*.py[cod]
+.venv
+venv
+*.db
+*.docx
+*.pdf

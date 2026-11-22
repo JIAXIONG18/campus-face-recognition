@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>校园人脸识别考勤与门禁系统</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">SC</div>
+      <div>
+        <h1>校园人脸识别考勤与门禁系统</h1>
+        <p>Smart Campus Face Recognition · ResNet-18 + ArcFace</p>
+      </div>
+    </div>
+    <nav class="tabs">
+      <button class="tab active" data-view="recognize">识别</button>
+      <button class="tab" data-view="enroll">录入</button>
+      <button class="tab" data-view="records">记录</button>
+      <button class="tab" data-view="settings">设置</button>
+      <button class="tab" data-view="about">系统信息</button>
+    </nav>
+  </header>
+
+  <main>
+    <section id="view-recognize" class="view active">
+      <div class="grid">
+        <div class="card">
+          <div class="card-head">
+            <h2>实时识别</h2>
+            <div class="scene">
+              <label><input type="radio" name="scene" value="考勤" checked /> 考勤</label>
+              <label><input type="radio" name="scene" value="门禁" /> 门禁</label>
+            </div>
+          </div>
+          <div class="stage">
+            <video id="video" autoplay playsinline muted></video>
+            <canvas id="canvas"></canvas>
+            <div id="placeholder" class="placeholder">
+              <div class="scan-icon"></div>
+              <p>点击“开启摄像头”或上传本地照片</p>
+            </div>
+          </div>
+          <div class="actions">
+            <button id="btn-camera" class="btn primary">开启摄像头</button>
+            <button id="btn-capture" class="btn accent" disabled>拍照识别</button>
+            <button id="btn-stop" class="btn ghost" disabled>关闭摄像头</button>
+            <label class="btn ghost file-btn">上传照片<input id="file-input" type="file" accept="image/*" hidden /></label>
+          </div>
+        </div>
+
+        <div class="card result-card">
+          <div class="card-head"><h2>识别结果</h2><span id="elapsed" class="muted"></span></div>
+          <div id="result" class="result empty">
+            <div class="avatar">?</div>
+            <h3>等待识别</h3>
+            <p>识别结果将在此展示</p>
+          </div>
+          <div class="score-wrap">
+            <div class="score-label"><span>相似度</span><strong id="score-text">--</strong></div>
+            <div class="score-bar"><div id="score-fill"></div></div>
+            <p class="muted small">判定阈值：<span id="threshold">--</span></p>
+          </div>
+          <div class="score-wrap">
+            <div class="score-label"><span>活体分数</span><strong id="liveness-text">--</strong></div>
+            <div class="score-bar"><div id="liveness-fill"></div></div>
+            <p class="muted small">活体阈值：<span id="liveness-threshold">--</span></p>
+          </div>
+          <div class="recent">
+            <h3>最近记录</h3>
+            <ul id="recent-list" class="recent-list"></ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="view-enroll" class="view">
+      <div class="grid">
+        <div class="card">
+          <div class="card-head"><h2>人员录入</h2><span class="muted">建议 3–5 张不同角度照片</span></div>
+          <form id="enroll-form" class="form">
+            <div class="field-row">
+              <label>学号 / 工号<input name="user_id" required placeholder="如 2023010101" /></label>
+              <label>姓名<input name="name" required placeholder="如 张三" /></label>
+            </div>
+            <label>身份类别
+              <select name="category">
+                <option>学生</option><option>教师</option><option>访客</option>
+              </select>
+            </label>
+            <label class="dropzone" id="dropzone">
+              <input id="enroll-files" type="file" accept="image/*" multiple hidden />
+              <span>拖拽照片到此处，或点击选择</span>
+            </label>
+            <div id="preview" class="preview"></div>
+            <button class="btn primary" type="submit">提交录入</button>
+          </form>
+        </div>
+        <div class="card">
+          <div class="card-head"><h2>已录入人员</h2><span id="user-count" class="muted"></span></div>
+          <ul id="user-list" class="user-list"></ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="view-records" class="view">
+      <div class="stat-row">
+        <div class="stat"><span>注册人数</span><strong id="stat-users">0</strong></div>
+        <div class="stat"><span>今日识别</span><strong id="stat-today">0</strong></div>
+        <div class="stat"><span>累计记录</span><strong id="stat-records">0</strong></div>
+        <div class="stat"><span>通过次数</span><strong id="stat-passed">0</strong></div>
+      </div>
+      <div class="card">
+        <div class="card-head">
+          <h2>识别记录</h2>
+          <button id="btn-refresh" class="btn ghost">刷新</button>
+        </div>
+        <div class="trend-wrap"><canvas id="trend" height="110"></canvas></div>
+        <table class="table">
+          <thead><tr><th>时间</th><th>学号</th><th>姓名</th><th>场景</th><th>相似度</th><th>活体</th><th>结果</th></tr></thead>
+          <tbody id="record-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="view-settings" class="view">
+      <div class="card settings">
+        <div class="card-head"><h2>识别参数设置</h2><span class="muted">即时生效，无需重启</span></div>
+        <form id="settings-form" class="form">
+          <div class="field-row">
+            <label>考勤阈值<input id="thr-attendance" type="number" step="0.01" min="0" max="1" required /></label>
+            <label>门禁阈值<input id="thr-gate" type="number" step="0.01" min="0" max="1" required /></label>
+          </div>
+          <label>活体阈值（logit，≥0 判为真实）<input id="thr-liveness" type="number" step="0.1" /></label>
+          <button class="btn primary" type="submit">保存设置</button>
+        </form>
+        <p class="muted small">考勤与门禁采用不同阈值：误识对门禁代价更高，门禁阈值应更大。</p>
+      </div>
+    </section>
+
+    <section id="view-about" class="view">
+      <div class="card about">
+        <h2>系统信息</h2>
+        <dl>
+          <div><dt>识别模型</dt><dd>轻量化 ResNet-18 + ArcFace（128 维特征）</dd></div>
+          <div><dt>人脸检测</dt><dd>YuNet（ONNX，五点对齐）</dd></div>
+          <div><dt>后端框架</dt><dd>Flask + SQLite</dd></div>
+          <div><dt>推理设备</dt><dd id="about-device">--</dd></div>
+          <div><dt>特征库规模</dt><dd id="about-gallery">--</dd></div>
+          <div><dt>判定阈值</dt><dd id="about-threshold">--</dd></div>
+          <div><dt>活体检测</dt><dd id="about-liveness">--</dd></div>
+        </dl>
+        <p class="muted">本系统为本科毕业设计成果，人脸数据仅用于本地演示，不作他用。</p>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast"></div>
+  <script src="app.js"></script>
+</body>
+</html>

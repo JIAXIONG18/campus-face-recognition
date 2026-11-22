@@ -1,0 +1,14 @@
+services:
+  face-app:
+    build: .
+    image: campus-face-recognition:latest
+    container_name: campus-face
+    ports:
+      - "5000:5000"
+    environment:
+      FACE_APP_HOST: 0.0.0.0
+      FACE_APP_PORT: "5000"
+    volumes:
+      # 注册人脸、SQLite 数据库、阈值配置都落在这里
+      - ./data:/app/data
+    restart: unless-stopped

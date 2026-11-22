@@ -1,0 +1,13 @@
+{
+ "tag": "abl_full",
+ "stage": "finetune",
+ "variant": "full",
+ "params": 11464987,
+ "num_classes": 50,
+ "train_images": 1316,
+ "best_val_acc": 0.5433526011560693,
+ "epochs": 30,
+ "batch": 32,
+ "lr": 0.005,
+ "seconds": 193.57405281066895
+}

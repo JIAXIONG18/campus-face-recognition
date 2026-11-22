@@ -1,0 +1,13 @@
+{
+ "tag": "finetune_celeba",
+ "stage": "finetune",
+ "variant": "full",
+ "params": 11464987,
+ "num_classes": 50,
+ "train_images": 150,
+ "best_val_acc": 0.04,
+ "epochs": 40,
+ "batch": 32,
+ "lr": 0.004,
+ "seconds": 177.16221594810486
+}

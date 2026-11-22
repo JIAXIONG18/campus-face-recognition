@@ -1,0 +1,13 @@
+{
+ "tag": "pretrain_full",
+ "stage": "pretrain",
+ "variant": "full",
+ "params": 11464987,
+ "num_classes": 801,
+ "train_images": 3955,
+ "best_val_acc": 0.3,
+ "epochs": 20,
+ "batch": 64,
+ "lr": 0.02,
+ "seconds": 279.86080837249756
+}

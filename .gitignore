@@ -1,0 +1,58 @@
+# ---------- 数据集（体积大、含隐私，绝不入库）----------
+data/*
+!data/.gitkeep
+
+# ---------- 模型权重：只保留可复现 demo 所需的两份 ----------
+experiments/runs/**/*.pt
+!experiments/runs/finetune_full/best.pt
+!experiments/runs/liveness/best.pt
+experiments/logs/
+experiments/embeddings.npz
+
+# ---------- 运行时产物 ----------
+*.db
+*.db-journal
+*.sqlite3
+*.log
+uploads/
+
+# ---------- Python ----------
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# ---------- 环境与密钥 ----------
+.env
+.env.*
+*.pem
+*.key
+
+# ---------- 编辑器 / 系统 ----------
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# ---------- 论文与答辩材料（含个人信息，默认不公开）----------
+docs/source/
+docs/__pycache__/
+docs/*.py
+docs/修改说明*.md
+docs/assets/probe.md
+*.docx
+*.doc
+基于深度学习的人脸识别系统与实现.pdf
+defense/
+
+# ---------- 构建产物与临时脚本 ----------
+build/
+dist/
+.scratch/

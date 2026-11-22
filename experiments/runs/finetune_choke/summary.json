@@ -1,0 +1,13 @@
+{
+ "tag": "finetune_choke",
+ "stage": "finetune",
+ "variant": "full",
+ "params": 11464987,
+ "num_classes": 20,
+ "train_images": 7097,
+ "best_val_acc": 1.0,
+ "epochs": 30,
+ "batch": 64,
+ "lr": 0.005,
+ "seconds": 312.6894645690918
+}
