@@ -50,7 +50,7 @@ Full tables and figures: [docs/RESULTS.md](docs/RESULTS.md).
 ## Quick start
 
 ```bash
-git clone https://github.com/<your-name>/campus-face-recognition.git
+git clone https://github.com/JIAXIONG18/campus-face-recognition.git
 cd campus-face-recognition
 python -m venv .venv && source .venv/bin/activate
 pip install torch==2.2.2 torchvision==0.17.2 --index-url https://download.pytorch.org/whl/cpu

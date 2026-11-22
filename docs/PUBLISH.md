@@ -2,6 +2,8 @@
 
 本文档说明如何把这个项目变成一个「点开就能看懂、克隆就能跑」的 GitHub 仓库，包括体积策略、提交步骤、认证方式与发布后的检查清单。
 
+> **当前状态**：已发布到 <https://github.com/JIAXIONG18/campus-face-recognition>，默认分支 `main`，CI 两个 job 均通过。本文档保留为复现/迁移指引。
+
 ---
 
 ## 1. 发布内容与体积策略
@@ -139,7 +141,16 @@ git config --global --unset http.proxy
 git config --global --unset https.proxy
 ```
 
-> 当前这台机器上 `git` 全局配置指向 `socks5://127.0.0.1:10808`，但该端口没有程序监听；同时 `github.com` 被解析到 `57.155.223.240`（非 GitHub 真实地址），HTTPS 握手被重置。也就是说：**必须先启动代理客户端（或在能直连 GitHub 的网络环境下）再推送**，否则任何认证方式都不会生效。
+> **本机实测记录（2026-11-22）**：全局配置里 `http.proxy = socks5://127.0.0.1:10808`，但该端口没有程序监听，所以第一次 `git ls-remote` 直接失败。真正的原因是 Git for Windows 默认使用 **schannel** 后端，而这台机器上 schannel 拿不到凭据（`AcquireCredentialsHandle failed: SEC_E_NO_CREDENTIALS 0x8009030e`），与网络无关。改用 **OpenSSL** 后端并清空代理后即可直连：
+>
+> ```bash
+> git -c http.sslBackend=openssl \
+>     -c http.sslCAInfo="D:/Download code/Git/Git/mingw64/etc/ssl/certs/ca-bundle.crt" \
+>     -c http.proxy= -c https.proxy= \
+>     ls-remote https://github.com/git/git.git HEAD
+> ```
+>
+> 推送时把同样四个 `-c` 参数带上即可。若你的机器 schannel 正常，则不需要这些参数。
 
 ---
 

@@ -10,7 +10,7 @@
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.2-EE4C2C?logo=pytorch&logoColor=white)](https://pytorch.org/)
 [![Flask](https://img.shields.io/badge/Flask-3.0-000000?logo=flask&logoColor=white)](https://flask.palletsprojects.com/)
 [![OpenCV](https://img.shields.io/badge/OpenCV-YuNet%20ONNX-5C3EE8?logo=opencv&logoColor=white)](https://opencv.org/)
-[![CI](https://img.shields.io/badge/CI-pytest%20%2B%20compileall-2088FF?logo=githubactions&logoColor=white)](.github/workflows/ci.yml)
+[![CI](https://github.com/JIAXIONG18/campus-face-recognition/actions/workflows/ci.yml/badge.svg)](https://github.com/JIAXIONG18/campus-face-recognition/actions/workflows/ci.yml)
 [![License](https://img.shields.io/badge/License-MIT-22c55e)](LICENSE)
 
 <img src="experiments/figures/fig_ui_recognize.png" width="900" alt="系统识别页截图：摄像头实时识别，右侧展示相似度、活体分数与最近记录">
@@ -170,7 +170,7 @@ $$
 **环境**：Python 3.10/3.11（Windows / Linux / macOS 均可），无需 GPU。
 
 ```bash
-git clone https://github.com/<your-name>/campus-face-recognition.git
+git clone https://github.com/JIAXIONG18/campus-face-recognition.git
 cd campus-face-recognition
 
 python -m venv .venv
