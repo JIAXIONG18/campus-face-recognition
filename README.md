@@ -23,6 +23,7 @@
 
 - [项目亮点](#项目亮点)
 - [功能一览](#功能一览)
+- [界面预览](#界面预览)
 - [系统架构](#系统架构)
 - [识别链路与延迟](#识别链路与延迟)
 - [模型设计](#模型设计)
@@ -60,6 +61,15 @@
 | 场景化阈值 | 考勤 0.70 / 门禁 0.80 双阈值，可在设置页热更新，无需重启服务 |
 | 模型自检 | `/api/health` 返回设备、权重路径、底库规模、活体开关，便于现场排障 |
 | 工程化 | GitHub Actions 跑单元测试、Dockerfile/docker-compose 一键部署、环境变量可覆盖全部路径 |
+
+## 界面预览
+
+<div align="center">
+  <img src="experiments/figures/fig_ui_enroll.png" width="440" alt="录入页：多图上传与已录入人员">
+  <img src="experiments/figures/fig_ui_settings.png" width="440" alt="设置页：阈值热更新">
+</div>
+
+左：多图录入与已录入人员管理；右：考勤/门禁/活体阈值在线调整，保存即生效。
 
 ## 系统架构
 
